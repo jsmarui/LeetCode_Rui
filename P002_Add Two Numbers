@@ -1,0 +1,76 @@
+# LeetCode_Rui
+
+#include <iostream>
+using namespace std;
+
+
+
+// Definition for singly-linked list.
+ struct ListNode {
+     int val;
+     ListNode *next;
+     ListNode(int x) : val(x), next(NULL) {}
+};
+
+
+ ListNode *CreateList(int n){
+	 ListNode dummy(-1);
+	 ListNode *p = &dummy;
+	 for (int i = 0; i < n; i++){
+		 int data;
+		 cin >> data;
+		 ListNode *L = new ListNode(data);
+		 p->next = L;
+		 p = p->next;
+	 }
+	 return dummy.next;
+ }
+
+ ListNode *addTwoNumbers(ListNode *l1, ListNode *l2) {
+	 ListNode dummy(-1);
+	 ListNode *p = &dummy;
+	 int carry = 0;
+	 while (l1 != NULL || l2!=NULL || carry!=0){
+		 int res = 0;
+		 if (l1 == NULL && l2 == NULL){
+			 res = carry;
+		 }
+         else if (l1 == NULL) {
+			 res = (carry + l2->val);
+		 }
+		 else if (l2 == NULL){
+			 res = (carry + l1->val);
+		 }
+		 else{
+			 res = (carry + l2->val + l1->val);
+		 }
+		 int digit = res % 10;
+		 carry = res / 10;
+		 ListNode *L = new ListNode(digit);
+		 p->next = L;
+		 p = p->next;
+		 if (l1 != NULL) l1 = l1->next;
+		 if (l2 != NULL) l2 = l2->next;
+	 }
+	 return dummy.next;
+ }
+
+ void PrintList(ListNode *L){
+	 while (L){
+		 cout << L->val << " ";
+		 L = L->next;
+	 }
+	 cout << endl;
+ }
+
+ int main(){
+	 int n, m;
+	 while (cin >> n >> m){
+		 ListNode *L1 = CreateList(n);
+		 ListNode *L2 = CreateList(m);
+		 ListNode *L3 = addTwoNumbers(L1, L2);
+		 PrintList(L3);
+	 }
+	 //system("pause");
+	 return 0;
+ }
