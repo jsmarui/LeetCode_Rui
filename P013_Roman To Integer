@@ -1,0 +1,77 @@
+#include <iostream>
+#include <string>
+#include <unordered_map>
+
+using namespace std;
+
+//答案的解法
+//从前往后扫描，如果当前比其前一个大，则相减
+inline int map(const char c){
+	switch (c){
+	case 'M': return 1000;
+	case 'D': return 500;
+	case 'C': return 100;
+	case 'L': return 50;
+	case 'X': return 10;
+	case 'V': return 5;
+	case 'I': return 1;
+	default: return 0;
+	}
+}
+
+//O(n) solution
+int romanToInt2(string s){
+	int result = 0;
+	for (size_t i = 0; i < s.size(); i++){
+		if (i > 0 && map(s[i]) > map(s[i - 1])){
+			//only two inverse successive letters at most
+			result += (map(s[i]) - 2 * map(s[i - 1]));
+		}
+		else{
+			result += map(s[i]);
+		}
+	}
+	return result;
+}
+
+
+
+
+// 自己的解法
+int romanToInt(string s) {
+	int val = 0;
+
+	const int radix[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+	
+	const string symbols[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL",
+		"X", "IX", "V", "IV", "I" };
+	unordered_map <string, int> hash;
+	
+	for (int i = 0; i < 13; i++){
+		hash[symbols[i]] = i;
+	}
+	
+	int len = s.length();
+	int i = 0;
+	while (i < len){
+		if ((i + 1 < len) && (s.substr(i, 2) == symbols[1] || (s.substr(i, 2) == symbols[3] || (s.substr(i, 2) == symbols[5]
+			|| (s.substr(i, 2) == symbols[7]) || s.substr(i, 2) == symbols[9]) || s.substr(i, 2) == symbols[11])))
+		{
+			val += radix[hash[s.substr(i, 2)]];
+			i = i + 2;
+		}
+		else{
+			val += radix[hash[s.substr(i, 1)]];
+			i++;
+		}
+	}
+	return val;
+}
+
+int main(){
+	string s;
+	while (cin >> s){
+		cout << romanToInt(s) << endl;
+	}
+	return 0;
+}
