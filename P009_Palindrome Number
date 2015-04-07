@@ -1,0 +1,29 @@
+#include <iostream>
+#include <cmath>
+using namespace std;
+
+bool isPalindrome(int x) {
+	if (x < 0) return false;
+	int xx = x;
+	int comparison = 0;
+	int d=1;
+	while (xx /= 10) d*=10;
+	
+	while (x>0){
+		int l = x / d;
+		int r = x % 10;
+		if (l != r) return false;
+		x = (x %d ) / 10;
+		d/=100;
+	}
+	return true;
+	
+}
+
+int main(){
+	int t;
+	while (cin >> t){
+		cout << isPalindrome(t) << endl;
+	}
+	return 0;
+}
