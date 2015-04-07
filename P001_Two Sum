@@ -1,0 +1,25 @@
+//recite
+ 
+vector<int> twoSum(vector<int> &numbers, int target)
+{
+	vector<int> res;
+	unordered_map<int, int> hash;
+	int len = numbers.size();
+	for (int i = 0; i < len; i++){
+		hash[numbers[i]] = i;
+	}
+
+	for (int i = 0; i < len-1; i++){
+		int gap = target - numbers[i];
+		unordered_map<int, int> ::iterator hash_it = hash.find(gap);
+		
+		if (hash_it == hash.end()) continue;
+		else {
+		    if (hash_it->second == i) continue;
+			res.push_back(i+1);
+			res.push_back(hash[gap]+1);
+			break;
+		}
+	}
+	return res;
+}
