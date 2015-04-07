@@ -1,0 +1,26 @@
+string convert(string s, int nRows) {
+  int len = s.length();
+	if (nRows <= 1 || len <= 1) return s;
+	
+	int k = nRows * 2 - 2;
+	string output;
+	for (int i = 0; i < nRows; i++){
+		int index = 0;
+		if (i == 0 || i == nRows - 1){
+			while (index*k + i < len){
+				output.append(1, s[index*k + i]);
+				index++;
+			}
+		}
+		else{
+			while (index*k + i < len){
+				output.append(1, s[index*k + i]);
+				if ((index+1)*k - i < len){
+					output.append(1, s[(index + 1)*k - i]);
+				}
+				index++;
+			}
+		}	
+	}
+	return output;
+}
