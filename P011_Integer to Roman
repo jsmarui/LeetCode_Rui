@@ -1,0 +1,99 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+//威少解法
+
+string intToRoman2(int num){
+	const int radix[] = { 1000, 900, 500, 400, 100, 90, 50, 40, 10, 9, 5, 4, 1 };
+	const string symbols[] = { "M", "CM", "D", "CD", "C", "XC", "L", "XL", 
+		"X", "IX", "V", "IV", "I" };
+	string rom;
+	for (int i = 0; num > 0; i++){
+		int count = num / radix[i];
+		num %= radix[i];
+		for (; count > 0; --count) rom += symbols[i];
+	}
+	return rom;
+}
+
+
+
+
+
+//sb 解法
+string intToRoman(int num) {
+	string res;
+	if (num == 0){
+		return "";
+	}
+	if (num >= 1000) {
+		res.push_back('M');
+		return res.append(intToRoman(num - 1000));
+	}
+	if (num >= 900){
+		res.push_back('C');
+		res.push_back('M');
+		return res.append(intToRoman(num - 900));
+	}
+	if (num >= 500){
+		res.push_back('D');
+		return res.append(intToRoman(num - 500));
+	}
+	if (num >= 400) {
+		res.push_back('C');
+		res.push_back('D');
+		return res.append(intToRoman(num - 400));
+	}
+	if (num >= 100){
+		res.push_back('C');
+		return res.append(intToRoman(num - 100));
+	}
+	if (num >= 90){
+		res.push_back('X');
+		res.push_back('C');
+		return res.append(intToRoman(num - 90));
+	}
+	if (num >= 50){
+		res.push_back('L');
+		return res.append(intToRoman(num - 50));
+	}
+	if (num >= 40){
+		res.push_back('X');
+		res.push_back('L');
+		return res.append(intToRoman(num - 40));
+	}
+	if (num >= 10){
+		res.push_back('X');
+		return res.append(intToRoman(num - 10));
+	}
+	if (num >= 9){
+		res.push_back('I');
+		res.push_back('X');
+		return res.append(intToRoman(num - 9));
+	}
+	if (num >= 5){
+		res.push_back('V');
+		return res.append(intToRoman(num - 5));
+	}
+	if (num >= 4){
+		res.push_back('I');
+		res.push_back('V');
+		return res.append(intToRoman(num - 4));
+	}
+	else{
+		res.push_back('I');
+		return res.append(intToRoman(num - 1));
+	}
+}
+
+int main(){
+	int val;
+	while (cin >> val){
+		cout << intToRoman(val) << endl;
+	/*	string a = "abcd";
+		string b = "efg";
+		cout << a.append(b) << endl;*/
+	}
+	return 0;
+}
